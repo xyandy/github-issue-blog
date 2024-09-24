@@ -1,7 +1,7 @@
 // import SearchBar from './components/SearchBar';
 import { getIssues } from './lib/github';
 
-export default async function Home({ searchParams }) {
+export default async function Home({ searchParams }: { searchParams: { page: string } }) {
   const page = Number(searchParams.page) || 1;
   const issues = await getIssues(page);
 

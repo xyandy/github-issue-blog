@@ -2,10 +2,14 @@ import { Octokit } from '@octokit/rest';
 
 const octokit = new Octokit({ auth: process.env.GITHUB_ACCESS_TOKEN });
 
+const owner = process.env.GITHUB_OWNER || 'xyandy';
+const repo = process.env.GITHUB_REPO || 'github-issue-blog';
+
 export async function getIssues(page = 1, perPage = 10) {
   const { data } = await octokit.issues.listForRepo({
-    owner: process.env.GITHUB_OWNER,
-    repo: process.env.GITHUB_REPO,
+    owner,
+    repo,
+    creator: owner,
     state: 'open',
     labels: 'blog',
     per_page: perPage,
@@ -16,8 +20,8 @@ export async function getIssues(page = 1, perPage = 10) {
 
 export async function getIssue(issueNumber: number) {
   const { data } = await octokit.issues.get({
-    owner: process.env.GITHUB_OWNER,
-    repo: process.env.GITHUB_REPO,
+    owner,
+    repo,
     issue_number: issueNumber,
   });
   return data;
@@ -25,8 +29,8 @@ export async function getIssue(issueNumber: number) {
 
 export async function getComments(issueNumber: number) {
   const { data } = await octokit.issues.listComments({
-    owner: process.env.GITHUB_OWNER,
-    repo: process.env.GITHUB_REPO,
+    owner,
+    repo,
     issue_number: issueNumber,
   });
   return data;
@@ -34,8 +38,8 @@ export async function getComments(issueNumber: number) {
 
 export async function createComment(issueNumber: number, body: string) {
   const { data } = await octokit.issues.createComment({
-    owner: process.env.GITHUB_OWNER,
-    repo: process.env.GITHUB_REPO,
+    owner,
+    repo,
     issue_number: issueNumber,
     body,
   });
@@ -44,7 +48,7 @@ export async function createComment(issueNumber: number, body: string) {
 
 export async function searchIssues(query: string) {
   const { data } = await octokit.search.issuesAndPullRequests({
-    q: `${query} repo:${process.env.GITHUB_OWNER}/${process.env.GITHUB_REPO} label:blog`,
+    q: `${query} repo:${owner}/${repo} label:blog`,
   });
   return data.items;
 }
