@@ -4,11 +4,15 @@ import { createComment } from '@/lib/github';
 import { useSession } from 'next-auth/react';
 import { useState } from 'react';
 
-export default function CommentForm({ issueNumber }) {
+interface Props {
+  issueNumber: number;
+}
+
+export default function CommentForm({ issueNumber }: Props) {
   const [comment, setComment] = useState('');
   const { data: session } = useSession();
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (session) {
       await createComment(issueNumber, comment);

@@ -1,7 +1,13 @@
 import BlogList from '@/components/BlogList';
 import { searchIssues } from '@/lib/github';
 
-export default async function SearchPage({ searchParams }) {
+interface SearchParamsProps {
+  searchParams: {
+    q: string;
+  };
+}
+
+export default async function SearchPage({ searchParams }: SearchParamsProps) {
   const query = searchParams.q || '';
   const issues = await searchIssues(query);
 
