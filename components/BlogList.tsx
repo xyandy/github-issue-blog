@@ -13,8 +13,6 @@ interface Props {
 export default async function BlogList({ issues }: Props) {
   return (
     <div className='container mx-auto p-4'>
-      {/* <h1 className='text-2xl font-bold mb-6'>GitHub Issues</h1> */}
-
       <div className='space-y-2'>
         {issues.map((issue) => (
           <Card key={issue.id} className='overflow-hidden'>

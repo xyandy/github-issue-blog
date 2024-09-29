@@ -16,9 +16,10 @@ export async function getIssues(page = 1, perPage = 50): Promise<Issue[]> {
     repo,
     creator: owner,
     state: 'open',
-    // labels: label,
     per_page: perPage,
     page,
+    q: 'is:issue',
+    // labels: label,
   });
   return data;
 }
