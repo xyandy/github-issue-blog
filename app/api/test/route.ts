@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getComments, getIssues } from '@/lib/github';
+import { getIssues } from '@/lib/github';
 
 export const GET = async (request: Request) => {
   const data = await getIssues();
