@@ -23,7 +23,7 @@ export default function BlogList({ issues }: Props) {
                 <h2 className='text-lg font-semibold'>{issue.title}</h2>
                 <p className='text-sm text-gray-500'>{new Date(issue.created_at).toLocaleDateString()}</p>
                 <div className='flex flex-wrap gap-2 mt-2'>
-                  {issue.labels.map((label: Label) => (
+                  {(issue.labels as Label[]).map((label: Label) => (
                     <Badge
                       key={label.id}
                       style={{ backgroundColor: `#${label.color}`, color: getContrastColor(label.color) }}
