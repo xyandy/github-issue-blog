@@ -8,15 +8,15 @@ const octokit = new Octokit({ auth: process.env.GITHUB_ACCESS_TOKEN });
 
 const owner = process.env.GITHUB_OWNER as string;
 const repo = process.env.GITHUB_REPO as string;
-// const label = 'blog';
+const defaultPerPage = 100;
 
-export async function getIssues(page = 1, perPage = 50): Promise<Issue[]> {
+export async function getIssues(page = 1): Promise<Issue[]> {
   const { data } = await octokit.issues.listForRepo({
     owner,
     repo,
     creator: owner,
     state: 'open',
-    per_page: perPage,
+    per_page: defaultPerPage,
     page,
     q: 'is:issue',
     // labels: label,
@@ -53,11 +53,19 @@ export async function createComment(issueNumber: number, body: string): Promise<
   return data;
 }
 
-export async function searchIssues(query: string): Promise<Issue[]> {
-  const q = `${query} is:issue is:open repo:${owner}/${repo}`;
+export async function searchIssues(query: string, labels: string[], page = 1): Promise<Issue[]> {
+  let q = `is:issue is:open repo:${owner}/${repo}`;
+  if (query && query !== '') {
+    q = `${query} ` + q;
+  }
+  if (labels && labels.length > 0) {
+    q += ` label:${labels.join(',')}`;
+  }
+
   const { data } = await octokit.search.issuesAndPullRequests({
-    q: q,
-    per_page: 100,
+    q,
+    page,
+    per_page: defaultPerPage,
   });
   return data.items as Issue[];
 }
