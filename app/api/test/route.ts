@@ -1,9 +1,9 @@
 import { NextResponse } from 'next/server';
-import { getComments } from '@/lib/github';
+import { getComments, getIssues } from '@/lib/github';
 
 export const GET = async (request: Request) => {
-  const comments = await getComments(Number(1));
-  return NextResponse.json(comments);
+  const data = await getIssues();
+  return NextResponse.json(data);
 };
 
 export const POST = async (request: Request) => {
