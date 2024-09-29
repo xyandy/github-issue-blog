@@ -10,7 +10,7 @@ const owner = process.env.GITHUB_OWNER as string;
 const repo = process.env.GITHUB_REPO as string;
 // const label = 'blog';
 
-export async function getIssues(page = 1, perPage = 10): Promise<Issue[]> {
+export async function getIssues(page = 1, perPage = 50): Promise<Issue[]> {
   const { data } = await octokit.issues.listForRepo({
     owner,
     repo,
