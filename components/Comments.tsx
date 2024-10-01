@@ -8,7 +8,6 @@ interface Props {
 }
 
 export default async function Comments({ comments }: Props) {
-  console.log(`--> comments: ${comments}`);
   return (
     <div className='mt-8'>
       <h2 className='text-2xl font-bold mb-4'>Comments</h2>

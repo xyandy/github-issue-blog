@@ -9,7 +9,7 @@ interface SearchParamsProps {
 
 export default async function SearchPage({ searchParams }: SearchParamsProps) {
   const query = searchParams.q || '';
-  const issues = await searchIssues(query);
+  const issues = await searchIssues(query, [], 1);
 
   return (
     <div className='container mx-auto px-4'>
