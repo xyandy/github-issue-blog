@@ -28,7 +28,6 @@ export default async function Home({ searchParams }: SearchParamsProps) {
   const now = Date.now();
   return (
     <div className='container mx-auto px-4'>
-      <h1>{now}</h1>
       <BlogList issues={issues} />
     </div>
   );
