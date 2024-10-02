@@ -27,7 +27,7 @@ export default async function BlogList({ issues }: Props) {
 
                 <div className='flex flex-wrap gap-2 mt-2'>
                   <Badge variant='secondary' className='text-base'>
-                    {new Date(issue.created_at).toLocaleDateString().replaceAll('/', '-')}
+                    {new Date(issue.created_at).toISOString().split('T')[0]}
                   </Badge>
 
                   {(issue.labels as Label[]).map((label: Label) => (

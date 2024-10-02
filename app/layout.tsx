@@ -24,15 +24,4 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </body>
     </html>
   );
-  // return (
-  //   <html lang='en'>
-  //     <body>
-  //       <header className='border-2 border-blue-500'>
-  //         <MyLink />
-  //       </header>
-  //       <main>{children}</main>
-  //       <footer></footer>
-  //     </body>
-  //   </html>
-  // );
 }

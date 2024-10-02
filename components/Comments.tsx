@@ -1,5 +1,5 @@
-import { markdownToHtml } from '@/lib/markdown';
 import { components } from '@octokit/openapi-types';
+import ReactMarkdown from 'react-markdown';
 
 type Comment = components['schemas']['issue-comment'];
 
@@ -7,13 +7,13 @@ interface Props {
   comments: Comment[];
 }
 
-export default async function Comments({ comments }: Props) {
+export default function Comments({ comments }: Props) {
   return (
     <div className='mt-8'>
       <h2 className='text-2xl font-bold mb-4'>Comments</h2>
 
-      {comments.map(async (comment: Comment) => {
-        const content = await markdownToHtml(comment.body || '');
+      {comments.map((comment: Comment) => {
+        const content = comment.body || '';
         return (
           <div key={comment.id} className='border-t py-4'>
             <div className='flex items-center space-x-2'>
@@ -23,7 +23,9 @@ export default async function Comments({ comments }: Props) {
                 {new Date(comment.created_at).toLocaleDateString()}
               </time>
             </div>
-            <div className='mt-2 prose' dangerouslySetInnerHTML={{ __html: content }} />
+            <div className='mt-2 prose'>
+              <ReactMarkdown>{content}</ReactMarkdown>
+            </div>
           </div>
         );
       })}
