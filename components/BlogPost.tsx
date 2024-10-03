@@ -1,9 +1,10 @@
-import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import rehypeHighlight from 'rehype-highlight';
-import 'highlight.js/styles/atom-one-dark.css';
-import remarkGfm from 'remark-gfm';
+import 'highlight.js/styles/atom-one-light.css';
+import 'github-markdown-css';
 import rehypeRaw from 'rehype-raw';
+import remarkGfm from 'remark-gfm';
+
 import { components } from '@octokit/openapi-types';
 
 type Issue = components['schemas']['issue'];
@@ -13,6 +14,7 @@ interface Props {
 }
 
 export default function BlogPost({ issue }: Props) {
+  const markdownString = issue.body || '';
   return (
     <article className='prose lg:prose-xl mx-auto'>
       <h1>{issue.title}</h1>
@@ -24,12 +26,14 @@ export default function BlogPost({ issue }: Props) {
         <time dateTime={issue.created_at}>{new Date(issue.created_at).toLocaleDateString()}</time>
       </div>
 
-      <ReactMarkdown
-        className='prose prose-sm sm:prose lg:prose-lg xl:prose-xl'
-        children={issue.body || ''}
-        remarkPlugins={[[remarkGfm, { singleTilde: false }]]}
-        rehypePlugins={[rehypeRaw, rehypeHighlight]}
-      />
+      <div className='container mx-auto px-4 py-8'>
+        <ReactMarkdown
+          className='markdown-body'
+          children={markdownString}
+          rehypePlugins={[rehypeRaw, rehypeHighlight]}
+          remarkPlugins={[[remarkGfm, { singleTilde: false }]]}
+        />
+      </div>
     </article>
   );
 }
