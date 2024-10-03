@@ -20,15 +20,41 @@ export default async function Home({ searchParams }: SearchParamsProps) {
 
   let issues: Issue[] = [];
   if (label && label !== '') {
-    issues = await searchIssues('', [label], 1);
+    issues = await searchIssues('', [label], page);
   } else {
     issues = await getIssues(page);
   }
 
-  const now = Date.now();
   return (
     <div className='container mx-auto px-4'>
       <BlogList issues={issues} />
+      <Pagination page={page} label={label} />
+    </div>
+  );
+}
+
+function Pagination({ page, label }: { page: number; label: string }) {
+  const getPageUrl = (pageNum: number) => {
+    const params = new URLSearchParams();
+    params.set('page', pageNum.toString());
+    if (label) {
+      params.set('label', label);
+    }
+    return `?${params.toString()}`;
+  };
+
+  return (
+    <div className='flex justify-center mt-8'>
+      {page > 1 && (
+        <a href={getPageUrl(page - 1)} className='mx-2 px-4 py-2 bg-blue-500 text-white rounded'>
+          上一页
+        </a>
+      )}
+
+      <span className='mx-2 px-4 py-2 bg-gray-200 rounded'>第 {page} 页</span>
+      <a href={getPageUrl(page + 1)} className='mx-2 px-4 py-2 bg-blue-500 text-white rounded'>
+        下一页
+      </a>
     </div>
   );
 }

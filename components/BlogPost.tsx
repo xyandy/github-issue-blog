@@ -23,10 +23,10 @@ export default function BlogPost({ issue }: Props) {
         <img src={issue.user?.avatar_url} alt={issue.user?.login} className='w-8 h-8 rounded-full' />
         <span>{issue.user?.login}</span>
         <span>•</span>
-        <time dateTime={issue.created_at}>{new Date(issue.created_at).toLocaleDateString()}</time>
+        <time dateTime={issue.created_at}>{new Date(issue.created_at).toISOString().split('T')[0]}</time>
       </div>
 
-      <div className='container mx-auto px-4 py-8'>
+      <div className='container mx-auto px-4 py-6'>
         <ReactMarkdown
           className='markdown-body'
           children={markdownString}
