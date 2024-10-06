@@ -32,19 +32,19 @@ function Header() {
         <nav className='hidden sm:flex items-center space-x-6'>
           <Link
             href='/'
-            className='text-gray-500 hover:text-blue-500 hover:border-b-4 hover:border-blue-500 text-xl font-medium'
+            className='text-gray-500 hover:text-blue-500 hover:border-b-4 hover:border-blue-500 text-lg font-medium'
           >
             首页
           </Link>
           <Link
             href='/archive'
-            className='text-gray-500 hover:text-blue-500 hover:border-b-4 hover:border-blue-500 text-xl font-medium'
+            className='text-gray-500 hover:text-blue-500 hover:border-b-4 hover:border-blue-500 text-lg font-medium'
           >
             归档
           </Link>
           <Link
             href='/about'
-            className='text-gray-500 hover:text-blue-500 hover:border-b-4 hover:border-blue-500 text-xl font-medium'
+            className='text-gray-500 hover:text-blue-500 hover:border-b-4 hover:border-blue-500 text-lg font-medium'
           >
             关于
           </Link>
@@ -64,7 +64,7 @@ function Header() {
 function Footer() {
   return (
     <footer className='bg-blue-500 shadow'>
-      <div className='container mx-auto text-center p-5 text-white text-lg'>
+      <div className='container mx-auto text-center p-4 text-white text-lg'>
         © {new Date().getFullYear()} GitHub Issue Blog
       </div>
     </footer>
