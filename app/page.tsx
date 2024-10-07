@@ -26,7 +26,7 @@ export default async function Home({ searchParams }: SearchParamsProps) {
   }
 
   return (
-    <div className='container mx-auto px-4'>
+    <div className='container mx-auto'>
       <BlogList issues={issues} />
       <Pagination page={page} label={label} />
     </div>

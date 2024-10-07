@@ -73,36 +73,16 @@ function Header() {
 }
 
 async function Main({ children }: { children: React.ReactNode }) {
-  // return (
-  //   <main className='flex-grow container mx-auto px-4 py-8'>
-  //     <div className='flex flex-col md:flex-row'>
-  //       {children}
-  //       <aside className='w-full md:w-1/3 space-y-8 md:space-y-4 hidden md:block'>
-  //         <div className='bg-white p-6 rounded-lg shadow'></div>
-
-  //         <div className='bg-white p-6 rounded-lg shadow'>
-  //           <h3 className='text-lg font-semibold mb-2 flex items-center'>
-  //             <span className='bg-red-500 text-white p-1 rounded mr-2'>公告</span>
-  //             公告
-  //           </h3>
-  //           <p className='text-gray-600'>人生就像品茗，慢慢品尝，才能回甘。</p>
-  //         </div>
-
-  //         <div className='bg-white p-6 rounded-lg shadow'>
-  //           <h3 className='text-lg font-semibold mb-4'>最新文章</h3>
-  //         </div>
-  //       </aside>
-  //     </div>
-  //   </main>
-  // );
   const labels = await getAllLabels();
   return (
-    <main className='container mx-auto py-8 flex-1 flex'>
+    <main className='container mx-auto py-8 flex-1 flex space-x-4'>
+      {/* left */}
       <div className='md:w-3/4 w-full'>{children}</div>
 
-      <div className='md:w-1/4 hidden md:block space-y-2'>
-        <div className='bg-white p-6 rounded-lg shadow'>
-          <h1 className='text-xl font-semibold mb-4'>标签</h1>
+      {/* right */}
+      <div className='md:w-1/4 hidden md:block space-y-4'>
+        <div className='bg-white p-6 rounded-lg'>
+          <h1 className='text-xl font-semibold pt-1 pb-4'>标签</h1>
 
           <div className='flex flex-wrap gap-2'>
             {labels.map((label: string) => (
