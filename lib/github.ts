@@ -69,3 +69,12 @@ export async function searchIssues(query: string, labels: string[], page = 1): P
   });
   return data.items as Issue[];
 }
+
+export async function getAllLabels(): Promise<string[]> {
+  const { data } = await octokit.issues.listLabelsForRepo({
+    owner,
+    repo,
+    per_page: defaultPerPage,
+  });
+  return data.map((label) => label.name);
+}
