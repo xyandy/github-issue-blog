@@ -14,9 +14,8 @@ export default async function Page({ params }: ParamsProps) {
   const comments = await getComments(Number(params.id));
 
   return (
-    <div className='container mx-auto px-4'>
-      <BlogPost issue={issue} />
-      <Comments comments={comments} />
+    <div className='container mx-auto bg-white rounded-xl'>
+      <BlogPost issue={issue} comments={comments} />
       {/* <CommentForm issueNumber={issue.number} /> */}
     </div>
   );

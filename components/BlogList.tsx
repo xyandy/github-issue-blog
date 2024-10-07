@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import { components } from '@octokit/openapi-types';
-import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
 import GithubLabel from '@/components/GithubLabel';
 
@@ -13,35 +12,33 @@ interface Props {
 
 export default async function BlogList({ issues }: Props) {
   return (
-    <div className='container mx-auto'>
-      <div className='space-y-2'>
-        {issues.map((issue: Issue) => (
-          <Card key={issue.id} className='overflow-hidden'>
-            <CardContent className='p-4 flex items-center'>
-              <div className='flex-grow'>
-                {/* title */}
-                <Link
-                  href={`/blog/${issue.number}`}
-                  className='text-xl font-semibold hover:text-blue-500 transition-colors duration-400'
-                >
-                  <h1>{issue.title}</h1>
-                </Link>
+    <div className='space-y-4'>
+      {issues.map((issue: Issue) => (
+        <Card key={issue.id}>
+          <CardContent className='p-4 flex items-center'>
+            <div className='flex-grow'>
+              {/* title */}
+              <Link
+                href={`/blog/${issue.number}`}
+                className='text-xl font-semibold hover:text-blue-500 transition-colors duration-400'
+              >
+                <h1>{issue.title}</h1>
+              </Link>
 
-                {/* label */}
-                <div className='flex flex-wrap gap-2 pt-3'>
-                  <GithubLabel label={new Date(issue.created_at).toISOString().split('T')[0]} />
+              {/* label */}
+              <div className='flex flex-wrap gap-2 pt-3'>
+                <GithubLabel label={new Date(issue.created_at).toISOString().split('T')[0]} />
 
-                  {(issue.labels as Label[]).map((label: Label) => (
-                    <Link key={label.id} href={`/?label=${encodeURIComponent(label.name)}`}>
-                      <GithubLabel label={label.name} />
-                    </Link>
-                  ))}
-                </div>
+                {(issue.labels as Label[]).map((label: Label) => (
+                  <Link key={label.id} href={`/?label=${encodeURIComponent(label.name)}`}>
+                    <GithubLabel label={label.name} />
+                  </Link>
+                ))}
               </div>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
+            </div>
+          </CardContent>
+        </Card>
+      ))}
     </div>
   );
 }

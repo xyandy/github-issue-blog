@@ -29,6 +29,7 @@ export async function getIssue(issueNumber: number): Promise<Issue> {
     owner,
     repo,
     issue_number: issueNumber,
+    q: 'is:issue',
   });
   return data;
 }
