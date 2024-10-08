@@ -40,7 +40,6 @@ export async function getComments(issueNumber: number): Promise<Comment[]> {
     repo,
     issue_number: issueNumber,
   });
-  console.log(`data: ${data}`);
   return data;
 }
 

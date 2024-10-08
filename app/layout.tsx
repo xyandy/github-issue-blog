@@ -101,7 +101,7 @@ async function Main({ children }: { children: React.ReactNode }) {
 function Footer() {
   return (
     <footer className='bg-blue-500 shadow'>
-      <div className='container mx-auto text-center p-3 text-white text-lg'>
+      <div className='container mx-auto text-center p-2 text-white text-lg'>
         © {new Date().getFullYear()} GitHub Issue Blog
       </div>
     </footer>
