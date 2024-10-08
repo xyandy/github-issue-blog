@@ -1,9 +1,8 @@
 import type { Metadata } from 'next';
+import '@/app/globals.css';
 import { getAllLabels } from '@/lib/github';
 import GithubLabel from '@/components/GithubLabel';
 import Link from 'next/link';
-
-import '@/app/globals.css';
 
 export const metadata: Metadata = {
   title: 'github issue blog',

@@ -24,14 +24,27 @@ export async function getIssues(page = 1): Promise<Issue[]> {
   return data;
 }
 
-export async function getIssue(issueNumber: number): Promise<Issue> {
-  const { data } = await octokit.issues.get({
-    owner,
-    repo,
-    issue_number: issueNumber,
-    q: 'is:issue',
-  });
-  return data;
+export async function getIssue(issueNumber: number): Promise<Issue | null> {
+  try {
+    const { data } = await octokit.issues.get({
+      owner,
+      repo,
+      issue_number: issueNumber,
+    });
+
+    if (data.pull_request) {
+      console.log(`${issueNumber} is a PR`);
+      return null;
+    }
+
+    return data;
+  } catch (error: any) {
+    if (error.status === 404) {
+      console.log(`${issueNumber} not found`);
+      return null;
+    }
+    throw error;
+  }
 }
 
 export async function getComments(issueNumber: number): Promise<Comment[]> {
