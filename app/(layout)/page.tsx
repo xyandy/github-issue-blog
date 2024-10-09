@@ -1,5 +1,5 @@
-// import SearchBar from './components/SearchBar';
-import { getIssues, searchIssues } from '@/lib/github';
+import { redirect } from 'next/navigation';
+import { getIssues, searchIssues, IssuesAndPagination } from '@/lib/github';
 import { components } from '@octokit/openapi-types';
 import BlogList from '@/components/BlogList';
 
@@ -18,22 +18,26 @@ export default async function Home({ searchParams }: SearchParamsProps) {
   const page = Number(searchParams.page) || 1;
   const label = searchParams.label || '';
 
-  let issues: Issue[] = [];
+  let ret: IssuesAndPagination;
   if (label && label !== '') {
-    issues = await searchIssues('', [label], page);
+    ret = await searchIssues('', [label], page);
   } else {
-    issues = await getIssues(page);
+    ret = await getIssues(page);
+  }
+
+  if (ret.issues.length === 0) {
+    redirect('/404');
   }
 
   return (
     <div className='container mx-auto'>
-      <BlogList issues={issues} />
-      <Pagination page={page} label={label} />
+      <BlogList issues={ret.issues} />
+      <Pagination page={page} label={label} link={ret.link} />
     </div>
   );
 }
 
-function Pagination({ page, label }: { page: number; label: string }) {
+function Pagination({ page, label, link }: { page: number; label: string; link: string | undefined }) {
   const getPageUrl = (pageNum: number) => {
     const params = new URLSearchParams();
     params.set('page', pageNum.toString());
@@ -42,6 +46,14 @@ function Pagination({ page, label }: { page: number; label: string }) {
     }
     return `?${params.toString()}`;
   };
+
+  const isLastPage = (link: string | undefined) => {
+    if (!link) return true;
+    return !link.includes('rel="next"');
+  };
+
+  let flag = isLastPage(link);
+  console.log(`page: ${page}, isLastPage: ${flag}, link: ${link}`);
 
   return (
     <div className='flex justify-center mt-8'>
@@ -52,9 +64,12 @@ function Pagination({ page, label }: { page: number; label: string }) {
       )}
 
       <span className='mx-2 px-4 py-2 bg-gray-200 rounded'>第 {page} 页</span>
-      <a href={getPageUrl(page + 1)} className='mx-2 px-4 py-2 bg-blue-500 text-white rounded'>
-        下一页
-      </a>
+
+      {!flag && (
+        <a href={getPageUrl(page + 1)} className='mx-2 px-4 py-2 bg-blue-500 text-white rounded'>
+          下一页
+        </a>
+      )}
     </div>
   );
 }

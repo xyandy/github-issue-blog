@@ -8,10 +8,15 @@ const octokit = new Octokit({ auth: process.env.GITHUB_ACCESS_TOKEN });
 
 const owner = process.env.GITHUB_OWNER as string;
 const repo = process.env.GITHUB_REPO as string;
-const defaultPerPage = 100;
+const defaultPerPage = 20;
 
-export async function getIssues(page = 1): Promise<Issue[]> {
-  const { data } = await octokit.issues.listForRepo({
+export interface IssuesAndPagination {
+  issues: Issue[];
+  link: string | undefined;
+}
+
+export async function getIssues(page = 1): Promise<IssuesAndPagination> {
+  const response = await octokit.issues.listForRepo({
     owner,
     repo,
     creator: owner,
@@ -21,7 +26,29 @@ export async function getIssues(page = 1): Promise<Issue[]> {
     q: 'is:issue',
     // labels: label,
   });
-  return data;
+  const { data, headers } = response;
+  return { issues: data, link: headers['link'] };
+}
+
+export async function searchIssues(query: string, labels: string[], page = 1): Promise<IssuesAndPagination> {
+  let q = `is:issue is:open repo:${owner}/${repo}`;
+  if (query && query !== '') {
+    q = `${query} ` + q;
+  }
+  if (labels && labels.length > 0) {
+    q += ` label:${labels.join(',')}`;
+  }
+
+  const response = await octokit.search.issuesAndPullRequests({
+    q,
+    page,
+    per_page: defaultPerPage,
+  });
+  const { data, headers } = response;
+  return {
+    issues: data.items as Issue[],
+    link: headers['link'],
+  };
 }
 
 export async function getIssue(issueNumber: number): Promise<Issue | null> {
@@ -64,23 +91,6 @@ export async function createComment(issueNumber: number, body: string): Promise<
     body,
   });
   return data;
-}
-
-export async function searchIssues(query: string, labels: string[], page = 1): Promise<Issue[]> {
-  let q = `is:issue is:open repo:${owner}/${repo}`;
-  if (query && query !== '') {
-    q = `${query} ` + q;
-  }
-  if (labels && labels.length > 0) {
-    q += ` label:${labels.join(',')}`;
-  }
-
-  const { data } = await octokit.search.issuesAndPullRequests({
-    q,
-    page,
-    per_page: defaultPerPage,
-  });
-  return data.items as Issue[];
 }
 
 export async function getAllLabels(): Promise<string[]> {
