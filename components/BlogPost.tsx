@@ -1,7 +1,10 @@
 import ReactMarkdown from 'react-markdown';
 import rehypeHighlight from 'rehype-highlight';
 import rehypeRaw from 'rehype-raw';
+import rehypeSlug from 'rehype-slug';
+import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import remarkGfm from 'remark-gfm';
+import remarkToc from 'remark-toc';
 import { components } from '@octokit/openapi-types';
 import 'highlight.js/styles/atom-one-light.css';
 import 'github-markdown-css';
@@ -17,23 +20,30 @@ interface Props {
 }
 
 export default function BlogPost({ issue, comments }: Props) {
-  const blogContent = issue.body || '';
+  // https://github.com/remarkjs/remark-toc?tab=readme-ov-file#options
+  const blogContent = '# Table of Contents\n' + issue.body || '';
+
   return (
     <div className='prose max-w-5xl mx-auto px-4 sm:px-6 lg:px-8'>
-      {/* blog content */}
-      <div className='text-5xl pt-10 text-blue-500'>{issue.title}</div>
-
-      <div className='flex items-center space-x-2 text-blue-500'>
+      {/* blog title */}
+      <div className='text-5xl pt-10'>{issue.title}</div>
+      {/* blog info */}
+      <div className='flex items-center space-x-2'>
         <img src={issue.user?.avatar_url} alt={issue.user?.login} className='w-8 h-8 rounded-full' />
         <span className='pl-1'>{issue.user?.login}</span>
         <time dateTime={issue.created_at}>{new Date(issue.created_at).toISOString().split('T')[0]}</time>
       </div>
+
+      {/* blog content */}
       <div>
         <ReactMarkdown
           className='markdown-body'
           children={blogContent}
-          rehypePlugins={[rehypeRaw, rehypeHighlight]}
-          remarkPlugins={[[remarkGfm, { singleTilde: false }]]}
+          rehypePlugins={[rehypeRaw, rehypeHighlight, rehypeSlug, [rehypeAutolinkHeadings, { behavior: 'wrap' }]]}
+          remarkPlugins={[
+            [remarkToc, { maxDepth: 2 }],
+            [remarkGfm, { singleTilde: false }],
+          ]}
         />
       </div>
 
