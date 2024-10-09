@@ -22,10 +22,10 @@ export default function BlogPost({ issue, comments }: Props) {
     <div className='prose max-w-5xl mx-auto px-4 sm:px-6 lg:px-8'>
       {/* blog content */}
       <div className='text-5xl pt-10 text-blue-500'>{issue.title}</div>
-      <div className='flex items-center space-x-2'>
+
+      <div className='flex items-center space-x-2 text-blue-500'>
         <img src={issue.user?.avatar_url} alt={issue.user?.login} className='w-8 h-8 rounded-full' />
-        <span>{issue.user?.login}</span>
-        <span>•</span>
+        <span className='pl-1'>{issue.user?.login}</span>
         <time dateTime={issue.created_at}>{new Date(issue.created_at).toISOString().split('T')[0]}</time>
       </div>
       <div>
@@ -37,7 +37,7 @@ export default function BlogPost({ issue, comments }: Props) {
         />
       </div>
 
-      <CommentButton issueUrl={issue.html_url} />
+      <CommentButton url={issue.html_url} count={comments.length} />
 
       {/* comments */}
       <div className='space-y-4 pb-4'>
@@ -46,16 +46,15 @@ export default function BlogPost({ issue, comments }: Props) {
 
           return (
             <Card key={comment.id}>
-              <CardHeader className='p-0'>
-                <div className='flex items-center space-x-2 bg-blue-100 h-12'>
+              <CardHeader className='p-0 text-blue-500'>
+                <div className='flex items-center space-x-2 bg-gray-200 h-8'>
                   <img src={comment.user?.avatar_url} alt={comment.user?.login} className='w-8 h-8 rounded-full' />
-                  <span>{comment.user?.login}</span>
-                  <span>•</span>
+                  <span className='pl-1'>{comment.user?.login}</span>
                   <time dateTime={comment.created_at}>{new Date(comment.created_at).toISOString().split('T')[0]}</time>
                 </div>
               </CardHeader>
 
-              <CardContent className='pt-0'>
+              <CardContent className='py-2 ml-4'>
                 <ReactMarkdown
                   className='markdown-body'
                   children={CommentContent}
@@ -81,17 +80,18 @@ const BlueDashedTextDivider = () => {
   );
 };
 
-function CommentButton({ issueUrl }: { issueUrl: string }) {
+function CommentButton({ url, count }: { url: string; count: number }) {
   return (
     <div className='py-12'>
       <Link
-        href={issueUrl}
+        href={url}
         target='_blank'
         rel='noopener noreferrer'
-        className='block w-full py-2 bg-blue-400 text-white rounded-md text-center hover:bg-blue-500 transition-colors no-underline'
+        className='block w-full py-2 bg-gray-200 rounded-md text-center hover:bg-blue-400 transition-colors no-underline'
         // className='block w-full py-2 bg-gray-100 rounded-md border border-gray-300 text-black hover:text-blue-500 text-center hover:bg-gray-200 transition-colors no-underline'
       >
         评论
+        <span className='bg-gray-300 rounded-lg p-1 ml-1 text-sm'>{count}</span> {/* 增加了左边距 */}
       </Link>
     </div>
   );

@@ -7,14 +7,15 @@ type Issue = components['schemas']['issue'];
 export const revalidate = 3600;
 
 export default async function Archives() {
-  const issues = await getIssues();
-  const groupedIssues = groupIssuesByYear(issues);
+  // const issues = await getIssues();
+  // const groupedIssues = groupIssuesByYear(issues);
 
-  return (
-    <div className='container mx-auto px-4 py-8'>
-      <ul className='timeline timeline-vertical'></ul>
-    </div>
-  );
+  // return (
+  //   <div className='container mx-auto px-4 py-8'>
+  //     <ul className='timeline timeline-vertical'></ul>
+  //   </div>
+  // );
+  return <div>Archives</div>;
 }
 
 function groupIssuesByYear(issues: Issue[]): Record<string, Issue[]> {
