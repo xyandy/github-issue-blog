@@ -39,7 +39,12 @@ export default function BlogPost({ issue, comments }: Props) {
         <ReactMarkdown
           className='markdown-body'
           children={blogContent}
-          rehypePlugins={[rehypeRaw, rehypeHighlight, rehypeSlug, [rehypeAutolinkHeadings, { behavior: 'wrap' }]]}
+          rehypePlugins={[
+            rehypeRaw,
+            rehypeHighlight,
+            rehypeSlug,
+            [rehypeAutolinkHeadings, { behavior: 'wrap', properties: { className: [''] } }],
+          ]}
           remarkPlugins={[
             [remarkToc, { maxDepth: 2 }],
             [remarkGfm, { singleTilde: false }],
