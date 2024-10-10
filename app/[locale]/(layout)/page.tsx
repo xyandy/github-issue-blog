@@ -53,7 +53,7 @@ function Pagination({ page, label, link }: { page: number; label: string; link: 
   };
 
   let flag = isLastPage(link);
-  console.log(`page: ${page}, isLastPage: ${flag}, link: ${link}`);
+  console.log(`BlogList, page: ${page}, isLastPage: ${flag}, link: ${link}`);
 
   return (
     <div className='flex justify-center mt-8'>

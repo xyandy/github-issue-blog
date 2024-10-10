@@ -94,10 +94,24 @@ export async function createComment(issueNumber: number, body: string): Promise<
 }
 
 export async function getAllLabels(): Promise<string[]> {
-  const { data } = await octokit.issues.listLabelsForRepo({
-    owner,
-    repo,
-    per_page: defaultPerPage,
-  });
-  return data.map((label) => label.name);
+  let allLabels: string[] = [];
+  let page = 1;
+  const perPage = 100;
+
+  while (true) {
+    const { data } = await octokit.issues.listLabelsForRepo({
+      owner,
+      repo,
+      per_page: perPage,
+      page: page,
+    });
+    allLabels = allLabels.concat(data.map((label) => label.name));
+
+    if (data.length < perPage) {
+      break;
+    }
+    page++;
+  }
+
+  return allLabels;
 }
