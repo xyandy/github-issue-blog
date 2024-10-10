@@ -1,11 +1,24 @@
 'use client';
 
-import Link from 'next/link';
+import { Link } from '@/i18n/routing';
 import { useState } from 'react';
+import { useTranslations } from 'next-intl';
+import { useLocale } from 'next-intl';
+import { useRouter } from 'next/navigation';
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
+  const t = useTranslations('nav');
+  const locale = useLocale();
+  const router = useRouter();
 
+  const changeLanguage = () => {
+    const newLocale = locale === 'en' ? 'zh' : 'en';
+    router.push(`/${newLocale}`);
+  };
+
+  const desktopCss = 'hover:text-blue-500 hover:border-b-4 hover:border-blue-500 text-lg font-medium';
+  const mobileCss = 'hover:text-blue-500 hover:border-b-2 hover:border-blue-500 text-lg font-medium';
   return (
     <header className='bg-white shadow-md'>
       <div className='flex justify-between items-center px-8 py-3'>
@@ -13,21 +26,18 @@ export default function Header() {
 
         {/* Desktop menu */}
         <nav className='hidden md:flex items-center space-x-6'>
-          <Link href='/' className='hover:text-blue-500 hover:border-b-4 hover:border-blue-500 text-lg font-medium'>
-            首页
+          <Link href='/' className={desktopCss}>
+            {t('home')}
           </Link>
-          <Link
-            href='/archive'
-            className='hover:text-blue-500 hover:border-b-4 hover:border-blue-500 text-lg font-medium'
-          >
-            归档
+          <Link href='/archive' className={desktopCss}>
+            {t('archive')}
           </Link>
-          <Link
-            href='/about'
-            className='hover:text-blue-500 hover:border-b-4 hover:border-blue-500 text-lg font-medium'
-          >
-            关于
+          <Link href='/about' className={desktopCss}>
+            {t('about')}
           </Link>
+          <button onClick={changeLanguage} className={desktopCss}>
+            {locale === 'en' ? 'English' : '中文'}
+          </button>
         </nav>
 
         {/* Mobile menu button */}
@@ -47,18 +57,18 @@ export default function Header() {
       {/* Mobile menu */}
       {isOpen && (
         <div className='md:hidden flex flex-col text-center space-y-2'>
-          <Link href='/' className='hover:text-blue-500 hover:border-2 hover:border-blue-500 text-lg font-medium'>
-            首页
+          <Link href='/' className={mobileCss}>
+            {t('home')}
           </Link>
-          <Link
-            href='/archive'
-            className='hover:text-blue-500 hover:border-2 hover:border-blue-500 text-lg font-medium'
-          >
-            归档
+          <Link href='/archive' className={mobileCss}>
+            {t('archive')}
           </Link>
-          <Link href='/about' className='hover:text-blue-500 hover:border-2 hover:border-blue-500 text-lg font-medium'>
-            关于
+          <Link href='/about' className={mobileCss}>
+            {t('about')}
           </Link>
+          <button onClick={changeLanguage} className={mobileCss}>
+            {locale === 'en' ? 'English' : '中文'}
+          </button>
         </div>
       )}
     </header>

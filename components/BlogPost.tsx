@@ -17,9 +17,10 @@ type Comment = components['schemas']['issue-comment'];
 interface Props {
   issue: Issue;
   comments: Comment[];
+  showCommentButton?: boolean;
 }
 
-export default function BlogPost({ issue, comments }: Props) {
+export default function BlogPost({ issue, comments, showCommentButton = true }: Props) {
   // https://github.com/remarkjs/remark-toc?tab=readme-ov-file#options
   const blogContent = '# Table of Contents\n' + issue.body || '';
 
@@ -52,7 +53,7 @@ export default function BlogPost({ issue, comments }: Props) {
         />
       </div>
 
-      <CommentButton url={issue.html_url} count={comments.length} />
+      {showCommentButton && <CommentButton url={issue.html_url} count={comments.length} />}
 
       {/* comments */}
       <div className='space-y-4 pb-4'>
@@ -84,16 +85,6 @@ export default function BlogPost({ issue, comments }: Props) {
     </div>
   );
 }
-
-const BlueDashedTextDivider = () => {
-  return (
-    <div className='flex items-center my-10'>
-      <div className='flex-grow border-t-4 border-blue-500 border-dashed'></div>
-      <span className='flex-shrink mx-4 text-blue-500 font-bold text-lg'>Comments</span>
-      <div className='flex-grow border-t-4 border-blue-500 border-dashed'></div>
-    </div>
-  );
-};
 
 function CommentButton({ url, count }: { url: string; count: number }) {
   return (

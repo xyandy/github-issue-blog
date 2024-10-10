@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import { Link } from '@/i18n/routing';
 import { components } from '@octokit/openapi-types';
 import { Card, CardContent } from '@/components/ui/card';
 import GithubLabel from '@/components/GithubLabel';
