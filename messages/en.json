@@ -3,5 +3,8 @@
     "home": "Home",
     "archive": "Archive",
     "about": "About"
+  },
+  "blog": {
+    "overview": "Overview"
   }
 }

@@ -55,7 +55,7 @@ async function Main({ children }: { children: React.ReactNode }) {
             ))}
           </div>
         </div>
-        {/* <div className='bg-white p-6 rounded-lg shadow'></div> */}
+        {/* <div className='bg-white p-6 rounded-lg shadow-sm'></div> */}
       </div>
     </main>
   );
@@ -63,7 +63,7 @@ async function Main({ children }: { children: React.ReactNode }) {
 
 function Footer() {
   return (
-    <footer className='bg-blue-500 shadow'>
+    <footer className='bg-blue-500 shadow-sm'>
       <div className='container mx-auto text-center p-2 text-white text-lg'>
         © {new Date().getFullYear()} GitHub Issue Blog
       </div>

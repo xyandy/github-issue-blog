@@ -10,6 +10,7 @@ import 'highlight.js/styles/atom-one-light.css';
 import 'github-markdown-css';
 import Link from 'next/link';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import { useTranslations } from 'next-intl';
 
 type Issue = components['schemas']['issue'];
 type Comment = components['schemas']['issue-comment'];
@@ -21,8 +22,9 @@ interface Props {
 }
 
 export default function BlogPost({ issue, comments, showCommentButton = true }: Props) {
-  // https://github.com/remarkjs/remark-toc?tab=readme-ov-file#options
-  const blogContent = '# Table of Contents\n' + issue.body || '';
+  const t = useTranslations('blog');
+  const heading = `# ${t('overview')} \n`;
+  const blogContent = heading + issue.body || '';
 
   return (
     <div className='prose max-w-5xl mx-auto px-4 sm:px-6 lg:px-8'>
@@ -47,7 +49,8 @@ export default function BlogPost({ issue, comments, showCommentButton = true }: 
             [rehypeAutolinkHeadings, { behavior: 'wrap', properties: { className: [''] } }],
           ]}
           remarkPlugins={[
-            [remarkToc, { maxDepth: 2 }],
+            // https://github.com/remarkjs/remark-toc?tab=readme-ov-file#options
+            [remarkToc, { maxDepth: 2, heading: '(目录|Overview)' }],
             [remarkGfm, { singleTilde: false }],
           ]}
         />

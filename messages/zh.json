@@ -3,5 +3,8 @@
     "home": "首页",
     "archive": "归档",
     "about": "关于"
+  },
+  "blog": {
+    "overview": "目录"
   }
 }
