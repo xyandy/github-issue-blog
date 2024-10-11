@@ -29,9 +29,9 @@ export default function Header() {
           <Link href='/' className={desktopCss}>
             {t('home')}
           </Link>
-          <Link href='/archive' className={desktopCss}>
+          {/* <Link href='/archive' className={desktopCss}>
             {t('archive')}
-          </Link>
+          </Link> */}
           <Link href='/about' className={desktopCss}>
             {t('about')}
           </Link>
@@ -60,9 +60,9 @@ export default function Header() {
           <Link href='/' className={mobileCss}>
             {t('home')}
           </Link>
-          <Link href='/archive' className={mobileCss}>
+          {/* <Link href='/archive' className={mobileCss}>
             {t('archive')}
-          </Link>
+          </Link> */}
           <Link href='/about' className={mobileCss}>
             {t('about')}
           </Link>

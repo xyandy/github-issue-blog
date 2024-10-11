@@ -12,10 +12,10 @@ interface Props {
 
 export default async function BlogList({ issues }: Props) {
   return (
-    <div className='space-y-4'>
+    <div className='space-y-2'>
       {issues.map((issue: Issue) => (
         <Card key={issue.id}>
-          <CardContent className='p-4 flex items-center'>
+          <CardContent className='p-2 flex items-center'>
             <div className='flex-grow'>
               {/* title */}
               <Link
@@ -26,7 +26,7 @@ export default async function BlogList({ issues }: Props) {
               </Link>
 
               {/* label */}
-              <div className='flex flex-wrap gap-2 pt-3'>
+              <div className='flex flex-wrap gap-2 pt-2'>
                 <GithubLabel label={new Date(issue.created_at).toISOString().split('T')[0]} />
 
                 {(issue.labels as Label[]).map((label: Label) => (

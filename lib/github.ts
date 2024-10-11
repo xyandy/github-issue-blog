@@ -31,12 +31,12 @@ export async function getIssues(page = 1): Promise<IssuesAndPagination> {
 }
 
 export async function searchIssues(query: string, labels: string[], page = 1): Promise<IssuesAndPagination> {
-  let q = `is:issue is:open repo:${owner}/${repo}`;
-  if (query && query !== '') {
-    q = `${query} ` + q;
-  }
+  let q = `repo:${owner}/${repo} is:issue is:open`;
   if (labels && labels.length > 0) {
-    q += ` label:${labels.join(',')}`;
+    q = `${q} label:${labels.join(',')}`;
+  }
+  if (query && query !== '') {
+    q = `${q} ${query}`;
   }
 
   const response = await octokit.search.issuesAndPullRequests({
