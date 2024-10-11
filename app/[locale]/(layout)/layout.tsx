@@ -6,7 +6,7 @@ import '@/app/globals.css';
 import { getAllLabels } from '@/lib/github';
 import GithubLabel from '@/components/GithubLabel';
 import Header from '@/components/Header';
-
+import SearchBar from '@/components/SearchBox';
 export const metadata: Metadata = {
   title: 'github issue blog',
   description: 'blog using github issue',
@@ -44,6 +44,11 @@ async function Main({ children }: { children: React.ReactNode }) {
 
       {/* right */}
       <div className='md:w-1/4 hidden md:block space-y-2'>
+        {/* search */}
+        <div className='bg-white p-4 rounded-lg'>
+          <SearchBar />
+        </div>
+
         {/* labels */}
         <div className='bg-white p-4 rounded-lg'>
           <h1 className='text-xl font-semibold pt-1 pb-4'>Labels</h1>
@@ -55,8 +60,6 @@ async function Main({ children }: { children: React.ReactNode }) {
             ))}
           </div>
         </div>
-        {/* search */}
-        <div className='bg-white p-6 rounded-lg shadow-sm'></div>
       </div>
     </main>
   );
