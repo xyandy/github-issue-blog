@@ -5,9 +5,9 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 First, run the development server:
 
 ```
-GITHUB_OWNER="you-github-account-name"
-GITHUB_REPO="your-repo-name"
-GITHUB_ACCESS_TOKEN="your-access-token"
+NEXT_PUBLIC_GITHUB_OWNER="you-github-account-name"
+NEXT_PUBLIC_GITHUB_REPO="your-repo-name"
+NEXT_PUBLIC_GITHUB_ACCESS_TOKEN="your-access-token"
 NEXT_PUBLIC_BLOG_TITLE="your-blog-title"
 ```
 
