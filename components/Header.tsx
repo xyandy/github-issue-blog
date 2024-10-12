@@ -17,12 +17,13 @@ export default function Header() {
     router.push(`/${newLocale}`);
   };
 
+  const title = process.env.NEXT_PUBLIC_BLOG_TITLE || 'My Blog';
   const desktopCss = 'hover:text-blue-500 hover:border-b-4 hover:border-blue-500 text-lg font-medium';
   const mobileCss = 'hover:text-blue-500 hover:border-b-2 hover:border-blue-500 text-lg font-medium';
   return (
     <header className='bg-white shadow-sm'>
       <div className='flex justify-between items-center px-8 py-3'>
-        <h1 className='text-2xl font-bold'>Dogxy Blog</h1>
+        <h1 className='text-2xl font-medium hover:text-blue-500'>{title}</h1>
 
         {/* Desktop menu */}
         <nav className='hidden md:flex items-center space-x-6'>
