@@ -10,6 +10,8 @@ interface Props {
   issues: Issue[];
 }
 
+const MAX_TITLE_LENGTH = 80;
+
 export default async function BlogList({ issues }: Props) {
   return (
     <div className='space-y-2'>
@@ -22,7 +24,11 @@ export default async function BlogList({ issues }: Props) {
                 href={`/blog/${issue.number}`}
                 className='text-xl font-semibold hover:text-blue-500 transition-colors duration-400'
               >
-                <h1>{issue.title}</h1>
+                <h1>
+                  {issue.title.length > MAX_TITLE_LENGTH
+                    ? `${issue.title.substring(0, MAX_TITLE_LENGTH)}...`
+                    : issue.title}
+                </h1>
               </Link>
 
               {/* label */}
