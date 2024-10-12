@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server';
 import { getIssues } from '@/lib/github';
 
+export const runtime = 'edge';
+
 export const GET = async (request: Request) => {
   const data = await getIssues();
   return NextResponse.json(data);

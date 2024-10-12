@@ -3,6 +3,8 @@ import CommentForm from '@/components/CommentForm';
 import { getComments, getIssue } from '@/lib/github';
 import { redirect } from 'next/navigation';
 
+export const runtime = 'edge';
+
 interface ParamsProps {
   params: {
     id: string;

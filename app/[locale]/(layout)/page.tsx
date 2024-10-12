@@ -3,7 +3,8 @@ import { getIssues, searchIssues, IssuesAndPagination } from '@/lib/github';
 import { components } from '@octokit/openapi-types';
 import BlogList from '@/components/BlogList';
 
-export const revalidate = 30;
+// export const revalidate = 30;
+export const runtime = 'edge';
 
 type Issue = components['schemas']['issue'];
 
