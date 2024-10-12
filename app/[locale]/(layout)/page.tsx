@@ -11,16 +11,18 @@ interface SearchParamsProps {
   searchParams: {
     page?: string;
     label?: string;
+    keyword?: string;
   };
 }
 
 export default async function Home({ searchParams }: SearchParamsProps) {
   const page = Number(searchParams.page) || 1;
   const label = searchParams.label || '';
+  const keyword = searchParams.keyword || '';
 
   let ret: IssuesAndPagination;
-  if (label && label !== '') {
-    ret = await searchIssues('', [label], page);
+  if (label !== '' || keyword !== '') {
+    ret = await searchIssues(keyword, label ? [label] : [], page);
   } else {
     ret = await getIssues(page);
   }
@@ -32,17 +34,30 @@ export default async function Home({ searchParams }: SearchParamsProps) {
   return (
     <div className='container mx-auto'>
       <BlogList issues={ret.issues} />
-      <Pagination page={page} label={label} link={ret.link} />
+      <Pagination page={page} label={label} keyword={keyword} link={ret.link} />
     </div>
   );
 }
 
-function Pagination({ page, label, link }: { page: number; label: string; link: string | undefined }) {
+function Pagination({
+  page,
+  label,
+  keyword,
+  link,
+}: {
+  page: number;
+  label: string;
+  keyword: string;
+  link: string | undefined;
+}) {
   const getPageUrl = (pageNum: number) => {
     const params = new URLSearchParams();
     params.set('page', pageNum.toString());
     if (label) {
       params.set('label', label);
+    }
+    if (keyword) {
+      params.set('keyword', keyword);
     }
     return `?${params.toString()}`;
   };
