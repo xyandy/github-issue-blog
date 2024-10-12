@@ -4,6 +4,13 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 First, run the development server:
 
+```
+GITHUB_OWNER="you-github-account-name"
+GITHUB_REPO="your-repo-name"
+GITHUB_ACCESS_TOKEN="your-access-token"
+NEXT_PUBLIC_BLOG_TITLE="your-blog-title"
+```
+
 ```bash
 npm run dev
 # or

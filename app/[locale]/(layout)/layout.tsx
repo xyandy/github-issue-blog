@@ -7,8 +7,9 @@ import { getAllLabels } from '@/lib/github';
 import GithubLabel from '@/components/GithubLabel';
 import Header from '@/components/Header';
 import SearchBar from '@/components/SearchBox';
+
 export const metadata: Metadata = {
-  title: 'github issue blog',
+  title: process.env.NEXT_PUBLIC_BLOG_TITLE || 'My Blog',
   description: 'blog using github issue',
 };
 
